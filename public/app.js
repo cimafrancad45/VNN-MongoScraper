@@ -3,13 +3,21 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+  //   $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+  // }
+
+  $("#articles").append("<div class='card' data-id='" + data[i]._id + "'>" + 
+  "<div='card-body'>" +
+  "<h5 class='card-title'>" + data[i].title + "</h5>" + 
+  "<a class='btn btn-primary' href='" + data[i].link + "'>Go to Article</a> " +
+  "<a class='btn btn-primary' id ='save-btn' href='#'>Save Article</a>"
+  + "</div>");
   }
 });
 
 
 // Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+$(document).on("click", "card", function() {
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
