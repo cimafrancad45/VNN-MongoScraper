@@ -16,9 +16,6 @@ var VNNSchema = new Schema({
     type: String,
     required: true
   },
-  summary: {
-    type: String
-  },
   //saved true or false for article saving
   saved: {
     type: Boolean,

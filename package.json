@@ -1,14 +1,14 @@
 {
-  "name": "mongoose_skeleton",
+  "name": "vnn_mongo_scraper",
   "version": "1.0.0",
-  "description": "",
+  "description": "A webscraper that scrapes from Vocaloid News Network",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "watch": "nodemon server.js"
   },
-  "author": "",
+  "author": "Daryl Cimafranca",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.16.2",
@@ -18,5 +18,14 @@
     "express-handlebars": "^3.0.0",
     "mongoose": "^5.3.3",
     "morgan": "^1.9.1"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cimafrancad45/VNN-MongoScraper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cimafrancad45/VNN-MongoScraper/issues"
+  },
+  "homepage": "https://github.com/cimafrancad45/VNN-MongoScraper#readme"
 }
