@@ -4,11 +4,11 @@ $.getJSON("/articles", function(data) {
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
 
-  $("#articles").append("<div class='card' data-id='" + data[i]._id + "'>" + 
+  $("#articles").append("<div class='card article-card'>" + 
   "<div='card-body'>" +
   "<h5 class='card-title'>" + data[i].title + "</h5>" + 
   "<a class='btn btn-primary' href='" + data[i].link + "'>Go to Article</a> " +
-  "<a class='btn btn-primary comment-btn' href='#'>Comment</a>"
+  "<a class='btn btn-primary comment-btn' href='#'  data-id='" + data[i]._id + "'>Comment</a>"
   + "</div>");
   }
 });
@@ -17,10 +17,11 @@ $.getJSON("/articles", function(data) {
 // Whenever someone clicks a p tag
 $(document).on("click", ".comment-btn", function() {
   // Empty the notes from the note section
+  console.log("Hey!")
   $("#notes").empty();
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
-
+  console.log(thisId)
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
@@ -29,14 +30,11 @@ $(document).on("click", ".comment-btn", function() {
     // With that done, add the note information to the page
     .then(function(data) {
       console.log(data);
-      // The title of the article
-      $("#notes").append("<h2>" + data.title + "</h2>");
-      // An input to enter a new title
-      $("#notes").append("<input id='titleinput' name='title' >");
-      // A textarea to add a new note body
-      $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
-      // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      // card with input data for comment
+      $("#notes").append("<div class= 'card'><h2 class = 'card-header'>" + data.title + "</h2>" +
+      "<div class='form-group card-body text-center'><input class ='form-control' id='titleinput' name='title' placeholder='Comment title'>" + 
+      "<br><textarea class='form-control' id='bodyinput' name='body' placeholder='Enter comment here.'></textarea><br>" +
+      "<button class = 'btn-primary btn text center' data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
       // If there's a note in the article
       if (data.note) {

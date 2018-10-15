@@ -11,7 +11,7 @@ module.exports = function (app) {
         axios.get("https://www.vocaloidnews.net/").then(function (response) {
             // Then, we load that into cheerio and save it to $ for a shorthand selector
             var $ = cheerio.load(response.data);
-        
+
             // Now, we grab every h2 within an article tag, and do the following:
             $("h2").each(function (i, element) {
                 // Save an empty result object
@@ -22,7 +22,7 @@ module.exports = function (app) {
                 result.link = $(this)
                     .children("a")
                     .attr("href");
-                
+
                 // Create a new Article using the `result` object built from scraping
                 db.Article.create(result)
                     .then(function (dbArticle) {
@@ -77,13 +77,17 @@ module.exports = function (app) {
     })
 
     // Route for grabbing a specific Article by id, populate it with it's note
-    app.get("/articles/notes/:id", function (req, res) {
+    app.get("/articles/:id", function (req, res) {
+        // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
         db.Article.findOne({ _id: req.params.id })
+            // ..and populate all of the notes associated with it
             .populate("note")
             .then(function (dbArticle) {
+                // If we were able to successfully find an Article with the given id, send it back to the client
                 res.json(dbArticle);
             })
             .catch(function (err) {
+                // If an error occurred, send it to the client
                 res.json(err);
             });
     });
@@ -133,55 +137,55 @@ module.exports = function (app) {
             });
     });
     //route for getting article note body
-    app.get("/notes/saved/:id", function(req, res) {
+    app.get("/notes/saved/:id", function (req, res) {
         // Create a new note and pass the req.body to the entry
         db.Note.find({ _id: req.params.id })
-          .then(function(dbNote) {
-            res.json(dbNote);
-          })
-          .catch(function(err) {
-            res.json(err);
-          });
-      });
-      
-      
+            .then(function (dbNote) {
+                res.json(dbNote);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
+
+
     // Route for deleting an Article's note
-    app.post("/notes/delete/:id", function(req, res) {
+    app.post("/notes/delete/:id", function (req, res) {
         db.Note.remove({ _id: req.params.id })
-          .then(function(){
-        db.Article.findOneAndUpdate(query, { $pull: { note: ObjectId(req.params.id) }})
-          })
-          .then(function(dbArticle) {
-            // posts deletion success message.
-            res.json("Note Deleted.");
-          })
-          .catch(function(err) {
-            res.json(err);
-          });
-        });
-    
-      // Route for saving articles.
-      app.post("/articles/saved/:id", function(req, res) {
+            .then(function () {
+                db.Article.findOneAndUpdate(query, { $pull: { note: ObjectId(req.params.id) } })
+            })
+            .then(function (dbArticle) {
+                // posts deletion success message.
+                res.json("Note Deleted.");
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
+
+    // Route for saving articles.
+    app.post("/articles/saved/:id", function (req, res) {
         db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true })
-        .then(function(dbArticle) {
-            res.json(dbArticle);
-          })
-          .catch(function(err) {
-            res.json(err);
-          });
-      });
-    
-      // Route for removing articles from the saved list by setting the saved boolean to false.
-      app.post("/articles/deleted/:id", function(req, res) {
+            .then(function (dbArticle) {
+                res.json(dbArticle);
+            })
+            .catch(function (err) {
+                res.json(err);
+            });
+    });
+
+    // Route for removing articles from the saved list by setting the saved boolean to false.
+    app.post("/articles/deleted/:id", function (req, res) {
         db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: false })
-        .then(function(){
-        db.Article.findOneAndUpdate({ _id: req.params.id }, {"$set": {"note": []}})
-        .then(function(dbArticle) {
-            res.json(dbArticle);
-          })
-          .catch(function(err) {
-            res.json(err);
-          });
-        });
-      });
+            .then(function () {
+                db.Article.findOneAndUpdate({ _id: req.params.id }, { "$set": { "note": [] } })
+                    .then(function (dbArticle) {
+                        res.json(dbArticle);
+                    })
+                    .catch(function (err) {
+                        res.json(err);
+                    });
+            });
+    });
 }

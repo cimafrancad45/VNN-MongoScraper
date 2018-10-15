@@ -1,16 +1,18 @@
-    <div id="container">
-      <div class="jumbotron bg-primary text-light text-center">
-      <h1>Vocaloid News Network Scraper</h1>
-      <h2>Look at current articles on vocaloid news network and comment on them!</h2>
-      <a class ="text-light"href="./scrape">Scrape Articles</a>
-      </div>
-     
-      <div class = "col-4" id="articles"></div>
-      
-      <div class = "col-4" id="notes">insert box here</div>
-      <div class= "modal"></div>
-
-    
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="app.js"></script>
+<div id="container">
+  <div class="jumbotron bg-primary text-light text-center">
+    <h1>Vocaloid News Network Scraper</h1>
+    <h2>Look at current articles on vocaloid news network and comment on them!</h2>
+    <a class="text-light" href="./scrape">Scrape Articles</a>
+  </div>
+  <div class="row">
+  <div class="container col-4">
+    <div id="articles"></div>
+  </div>
+  <div class="container col-4">
+    <div class='form-group' id="notes"></div>
+    <div class="modal"></div>
+  </div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="app.js"></script>
