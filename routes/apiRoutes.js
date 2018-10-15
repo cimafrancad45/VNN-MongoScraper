@@ -22,7 +22,7 @@ module.exports = function (app) {
                 result.link = $(this)
                     .children("a")
                     .attr("href");
-                    
+                
                 // Create a new Article using the `result` object built from scraping
                 db.Article.create(result)
                     .then(function (dbArticle) {
@@ -34,7 +34,7 @@ module.exports = function (app) {
                         return res.json(err);
                     });
             });
-
+            $("div")
             // If we were able to successfully scrape and save an Article, send a message to the client
             res.send("Scrape Successful!");
         });

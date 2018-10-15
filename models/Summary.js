@@ -5,33 +5,16 @@ var Schema = mongoose.Schema;
 
 // Using the Schema constructor, create a new UserSchema object
 // This is similar to a Sequelize model
-var VNNSchema = new Schema({
+var SummarySchema = new Schema({
   // `title` is required and of type String
-  title: {
-    type: String,
-    required: true
-  },
-  // `link` is required and of type String
-  link: {
-    type: String,
-    required: true
-  },
   summary: {
-    type: String
-  },
-  //saved true or false for article saving
-  saved: {
-    type: Boolean,
-    default: false
-  },
-  note: {
-    type: Schema.Types.ObjectId,
-    ref: "Note"
+    type: String,
+    required: true
   }
 });
 
 // This creates our model from the above schema, using mongoose's model method
-var Article = mongoose.model("Article", VNNSchema);
+var Summary = mongoose.model("Article", SummarySchema);
 
 // Export the Article model
-module.exports = Article;
+module.exports = Summary;
